@@ -89,7 +89,6 @@ def execute(interactor_objects: Calculate, sorted_rpes: dict, vertical_accounts:
                         # Multiply by 1 in case rpe = (Account) (direct link)
                         args = (stack.pop(), 1)
                         value = operators.execute('*', period, *args)
-                    ##
                     vertical_sum_value += value
                 owner_account.set_value(period, vertical_sum_value)
             else:
