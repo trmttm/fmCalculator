@@ -1,5 +1,5 @@
 class Operators:
-    __takes_one_argument__ = ('abs',)
+    __takes_one_argument__ = ('abs', 'int',)
     __takes_two_arguments__ = ('+', '-', '*', 'x', '/', '**', '^', '=', '<', '<=', '>', '>=', 'max', 'min', 'shift',
                                'iferror')
     __takes_arbitrary_number_of_arguments__ = ('sum', 'average')
@@ -26,6 +26,7 @@ class Operators:
             'average': __average__,
             'abs': abs__,
             'iferror': iferror__,
+            'int': int__,
         }
 
     def takes_one_argument(self, operator_id) -> bool:
@@ -115,6 +116,10 @@ def iferror__(period: int, a, b, shift_a=0, shift_b=0):
     except ZeroDivisionError:
         value = get_value(b, period + shift_b)
     return value
+
+
+def int__(period: int, a):
+    return int(get_value(a, period))
 
 
 def get_value(element, period: int):
