@@ -1,6 +1,8 @@
 from typing import Any
 from typing import Dict
 
+import spreadsheet.Interactor.set_worksheets
+
 from . import SortRPE
 from .BaseClass import UseCase
 from .Objects import InteractorObjects
@@ -56,12 +58,13 @@ def execute(interactor_objects: Calculate, sorted_rpes: dict, vertical_accounts:
                                         shift_a = p - period
                                 except AttributeError:
                                     pass
-                                value = operators.execute(element, *args, shift_a=shift_a, shift_b=shift_b)
+                                value = spreadsheet.Interactor.set_worksheets.execute(element, *args, shift_a=shift_a,
+                                                                                      shift_b=shift_b)
                                 stack.append(value)
                             elif operators.takes_one_argument(element):
                                 op = stack.pop()
                                 args = (period, op)
-                                value = operators.execute(element, *args)
+                                value = spreadsheet.Interactor.set_worksheets.execute(element, *args)
                                 stack.append(value)
                             else:
                                 try:
@@ -79,7 +82,7 @@ def execute(interactor_objects: Calculate, sorted_rpes: dict, vertical_accounts:
                                 else:
                                     # Calculate
                                     args = op1 + (op2,)
-                                    value = operators.execute(element, period, *args)
+                                    value = spreadsheet.Interactor.set_worksheets.execute(element, period, *args)
                                     stack.append(value)
                         else:
                             stack.append(element)  # float
@@ -88,7 +91,7 @@ def execute(interactor_objects: Calculate, sorted_rpes: dict, vertical_accounts:
                     else:
                         # Multiply by 1 in case rpe = (Account) (direct link)
                         args = (stack.pop(), 1)
-                        value = operators.execute('*', period, *args)
+                        value = spreadsheet.Interactor.set_worksheets.execute('*', period, *args)
                     vertical_sum_value += value
                 owner_account.set_value(period, vertical_sum_value)
             else:
@@ -112,12 +115,12 @@ def calculate_value(accounts, expression, operators, period) -> float:
                 op2 = stack.pop()
                 op1 = stack.pop()
                 args = (period, op1, op2)
-                value = operators.execute(element, *args)
+                value = spreadsheet.Interactor.set_worksheets.execute(element, *args)
                 stack.append(value)
             elif operators.takes_one_argument(element):
                 op = stack.pop()
                 args = (period, op)
-                value = operators.execute(element, *args)
+                value = spreadsheet.Interactor.set_worksheets.execute(element, *args)
                 stack.append(value)
             else:
                 try:
@@ -135,7 +138,7 @@ def calculate_value(accounts, expression, operators, period) -> float:
                 else:
                     # Calculate
                     args = op1 + (op2,)
-                    value = operators.execute(element, period, *args)
+                    value = spreadsheet.Interactor.set_worksheets.execute(element, period, *args)
                     stack.append(value)
         else:
             stack.append(element)  # float
@@ -144,5 +147,5 @@ def calculate_value(accounts, expression, operators, period) -> float:
     else:
         # Multiply by 1 in case rpe = (Account) (direct link)
         args = (stack.pop(), 1)
-        value = operators.execute('*', period, *args)
+        value = spreadsheet.Interactor.set_worksheets.execute('*', period, *args)
     return value
