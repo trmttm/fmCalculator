@@ -1,7 +1,7 @@
 class Operators:
     __takes_one_argument__ = ('abs', 'int',)
     __takes_two_arguments__ = ('+', '-', '*', 'x', '/', '**', '^', '=', '<', '<=', '>', '>=', 'max', 'min', 'shift',
-                               'iferror')
+                               'iferror', 'round')
     __takes_arbitrary_number_of_arguments__ = ('sum', 'average')
 
     def __init__(self):
@@ -26,6 +26,7 @@ class Operators:
             'average': __average__,
             'abs': abs__,
             'iferror': iferror__,
+            'round': round__,
             'int': int__,
         }
 
@@ -116,6 +117,10 @@ def iferror__(period: int, a, b, shift_a=0, shift_b=0):
     except ZeroDivisionError:
         value = get_value(b, period + shift_b)
     return value
+
+
+def round__(period: int, a, b, shift_a=0, shift_b=0):
+    return round(get_value(a, period + shift_a), int(get_value(b, period + shift_b)))
 
 
 def int__(period: int, a):
