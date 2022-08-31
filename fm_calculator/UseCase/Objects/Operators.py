@@ -4,7 +4,7 @@ import Utilities
 class Operators:
     __takes_one_argument__ = ('abs', 'int',)
     __takes_two_arguments__ = ('+', '-', '*', 'x', '/', '**', '^', '=', '<', '<=', '>', '>=', 'max', 'min', 'shift',
-                               'iferror', 'round', 'round up', 'round down')
+                               'iferror', 'round', 'round up', 'round down', 'mod')
     __takes_arbitrary_number_of_arguments__ = ('sum', 'average')
 
     def __init__(self):
@@ -31,6 +31,7 @@ class Operators:
             'iferror': iferror__,
             'round': round__,
             'round up': round_up__,
+            'mod': mod__,
             'round down': round_down__,
             'int': int__,
         }
@@ -130,6 +131,10 @@ def round__(period: int, a, b, shift_a=0, shift_b=0):
 
 def round_up__(period: int, a, b, shift_a=0, shift_b=0):
     return Utilities.round_decimals_up(get_value(a, period + shift_a), int(get_value(b, period + shift_b)))
+
+
+def mod__(period: int, a, b, shift_a=0, shift_b=0):
+    return get_value(a, period + shift_a) % get_value(b, period + shift_b)
 
 
 def round_down__(period: int, a, b, shift_a=0, shift_b=0):
