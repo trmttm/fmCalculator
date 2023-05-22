@@ -1,2 +1,2 @@
-from .DataTable import DataTable
 from .Configurations import Configurations
+from .DataTable import DataTable
