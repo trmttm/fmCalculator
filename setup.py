@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='fm_calculator',
     version='1.0.0',
-    packages=[],
+    packages=['fm_calculator'],
     url='',
     license='',
     author='Taro Yamaka',
